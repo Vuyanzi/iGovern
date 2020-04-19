@@ -1,15 +1,18 @@
 package studios.luxurious.igovern.activities;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
 import studios.luxurious.igovern.R;
+import studios.luxurious.igovern.fragments.ExploreFragment;
+import studios.luxurious.igovern.fragments.HomeFragment;
+import studios.luxurious.igovern.fragments.NotificationsFragment;
 
 
 /**
@@ -29,14 +32,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView tvSelected = findViewById(R.id.tv_selected);
-        tvSelected.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/SourceSansPro-Regular.ttf"));
-
         MeowBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigation);
-
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_explore));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_NOTIFICATION, R.drawable.ic_notification));
+
+        getSupportActionBar().setElevation(0);
 
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
@@ -49,29 +50,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
 
-                String name;
+                Fragment selectedFragment;
+
                 switch (item.getId()) {
                     case ID_HOME:
-                        name = "HOME";
+                        selectedFragment = new HomeFragment();
                         break;
-                    case ID_EXPLORE:
-                        name = "EXPLORE";
+                    case ID_EXPLORE: selectedFragment = new ExploreFragment();
                         break;
-                    case ID_MESSAGE:
-                        name = "MESSAGE";
-                        break;
-                    case ID_NOTIFICATION:
-                        name = "NOTIFICATION";
-                        break;
-                    case ID_ACCOUNT:
-                        name = "ACCOUNT";
+                    case ID_NOTIFICATION: selectedFragment = new NotificationsFragment();
                         break;
                     default:
-                        name = "";
+                        selectedFragment = new HomeFragment();
+
                 }
-                tvSelected.setText(getString(R.string.main_page_selected, name));
+
+                goToSelectedFragment(selectedFragment);
+
+
             }
         });
+
+        goToSelectedFragment(new HomeFragment());
 
         bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override
@@ -84,5 +84,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setCount(ID_NOTIFICATION, "3");
 
         bottomNavigation.show(ID_HOME,true);
+    }
+
+    private void goToSelectedFragment(Fragment selectedFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, selectedFragment);
+        transaction.commit();
     }
 }

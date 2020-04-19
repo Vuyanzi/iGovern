@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    xmlns:attribute="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:id="@+id/actionIcons"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            attribute:srcCompat="@drawable/ic_help"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/actionName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="@color/default_text_colot"
+                android:layout_gravity="center_horizontal"
+                android:textSize="17sp"
+                android:lines="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+            <TextView
+                android:id="@+id/actionDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subtitle"
+                android:textColor="@color/faded_default_text_colot"
+                android:textSize="12sp"
+                android:lines="1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+        </LinearLayout>
+</LinearLayout>

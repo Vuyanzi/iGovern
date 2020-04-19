@@ -6,4 +6,20 @@
     <color name="white">#FFFFFF</color>
     <color name="orange">#ff6f00</color>
     <color name="default_text_color">#3c415e</color>
+    <color name="transparent">#00000000</color>
+    <color name="white_faded">#F8F5F5</color>
+
+    <color name="green">#4CAF50</color>
+
+    <color name="default_text_colot">#212121</color>
+    <color name="faded_default_text_colot">#AA212121</color>
+
+
+    <color name="menu_yellow">#FFC107</color>
+    <color name="menu_pink">#E91E63</color>
+    <color name="menu_orange">#FF5722</color>
+    <color name="menu_green">#4CAF50</color>
+    <color name="menu_sky_blue">#00FFFF</color>
+    <color name="menu_sky_blue_dark">#00BFBF</color>
+    <color name="menu_purple">#9C27B0</color>
 </resources>
