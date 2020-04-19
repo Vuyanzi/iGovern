@@ -14,7 +14,7 @@ defmodule IGovernWeb.SuggestionView do
     %{
       id: suggestion.id,
       device: suggestion.device,
-      suggestion: suggestion.suggestion,
+      content: suggestion.content,
       status: suggestion.status,
       county: suggestion.county
     }

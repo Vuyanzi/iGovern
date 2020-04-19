@@ -6,7 +6,7 @@ defmodule IGovern.Suggestions.Suggestion do
   schema "suggestions" do
     field :device, :string
     field :status, :string
-    field :suggestion, :string
+    field :content, :string
     field :county, :string
 
     timestamps()
@@ -15,8 +15,8 @@ defmodule IGovern.Suggestions.Suggestion do
   @doc false
   def changeset(suggestion, attrs) do
     suggestion
-    |> cast(attrs, [:device, :suggestion, :status, :county])
-    |> validate_required([:device, :suggestion, :county])
+    |> cast(attrs, [:device, :content, :status, :county])
+    |> validate_required([:device, :content, :county])
   end
 
   def filter(params) do
