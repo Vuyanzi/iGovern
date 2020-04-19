@@ -1,19 +1,27 @@
 # IGovern
 
-To start your Phoenix server:
+## Prerequisites
+
+  * You must have [Elixir](https://elixir-lang.org/install.html) installed and Postgres running
+
+To start the server:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+  * Start IGovern endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## API GUIDE
 
-## Learn more
+  * ### Creating a suggestion
+    `POST /api/suggestions`
+    #### Body
+    `{suggestion: {content: " ", device: " ", county: " "}}`
+  * ### Listing suggestions
+    `GET /api/suggestions`
+    #### Query params
+    * `device`
+    * `status`
+    * `county`
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
