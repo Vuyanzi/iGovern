@@ -1,9 +1,7 @@
 package studios.luxurious.igovern.fragments;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Gravity;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import studios.luxurious.igovern.R;
+import studios.luxurious.igovern.activities.MainActivity;
 import studios.luxurious.igovern.adapters.ActionMenuAdapter;
 import studios.luxurious.igovern.adapters.HomeMenuAdapter;
 import studios.luxurious.igovern.utils.ActionMenu;
@@ -47,10 +45,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-//        setHasOptionsMenu(true);
-
         initViews(view);
-//        checkPermissions();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -71,21 +66,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void checkPermissions() {
-        String[] permissions = {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        boolean[] permissionGranted = new boolean[permissions.length];
-        for (int i = 0; i < permissions.length; i++) {
-            String permission = permissions[i];
-            if (getActivity() != null) {
-                permissionGranted[i] = ContextCompat.checkSelfPermission(getActivity(), permission) == PackageManager.PERMISSION_GRANTED;
-            }
-        }
-        if (!permissionGranted[0] || !permissionGranted[1]) {
-            showCFDialog(permissions);
-        }
-
-    }
-
     private void setItemClickListeners() {
 
         homeMenuAdapter.setOnItemClickListener(new HomeMenuAdapter.ClickListener() {
@@ -99,8 +79,9 @@ public class HomeFragment extends Fragment {
 
                 switch (tag) {
 
-                    case "tag":
-//                        startActivity(new Intent(getActivity(), StartActivity.class));
+                    case "report_problem":
+                        ((MainActivity)getActivity()).openBottomSheet();
+
                         break;
                     case "send_money":
 //                        startActivity(new Intent(getActivity(), ContactsActivity.class));
@@ -119,14 +100,14 @@ public class HomeFragment extends Fragment {
         actionMenus.add(new ActionMenu("Feedback", "Give us a feedback", getResources().getDrawable(R.drawable.ic_metrics)));
         actionMenus.add(new ActionMenu("FAQs", "Read our Frequently Asked Questions", getResources().getDrawable(R.drawable.ic_help)));
         actionMenus.add(new ActionMenu("About Us", "Know more about " + getString(R.string.app_name), getResources().getDrawable(R.drawable.ic_world)));
-        actionMenus.add(new ActionMenu("Logout", "Logout from "+getString(R.string.app_name), getResources().getDrawable(R.drawable.ic_contact)));
+        actionMenus.add(new ActionMenu("Logout", "Logout from " + getString(R.string.app_name), getResources().getDrawable(R.drawable.ic_contact)));
 
         actionMenuAdapter.notifyDataSetChanged();
     }
 
     private void loadMenuItems() {
 
-        homeMenus.add(new HomeMenu("Report a problem", "send_money", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_purple)));
+        homeMenus.add(new HomeMenu("Report a problem", "report_problem", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_purple)));
         homeMenus.add(new HomeMenu("Send a suggestion", "tag", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_orange)));
         homeMenus.add(new HomeMenu("View History", "tag", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_pink)));
 //        homeMenus.add(new HomeMenu("Buy Airtime", "tag", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_sky_blue_dark)));
@@ -145,19 +126,23 @@ public class HomeFragment extends Fragment {
         actionMenuAdapter = new ActionMenuAdapter(actionMenus);
         homeMenuAdapter = new HomeMenuAdapter(homeMenus);
 
-        if (getActivity() != null) {
-            vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        }
 
+
+        if(getActivity() !=null)
+
+    {
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
+}
 
-    private void showCFDialog(final String[] permissions) {
+
+    private void showCFDialog() {
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity());
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
 
         // Title and message
-        builder.setTitle("Grant us permission");
+        builder.setTitle("Report a problem");
         builder.setMessage("In order to function properly, " + getString(R.string.app_name) + " needs the following permissions:\nPermission to access your Phone and Contacts.\nPermission to write to your phone storage.");
 
 
@@ -166,7 +151,7 @@ public class HomeFragment extends Fragment {
         builder.addButton("Allow Access", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                requestPermissions(permissions, 1);
+//                requestPermissions(permissions, 1);
                 alertDialog.dismiss();
             }
         });

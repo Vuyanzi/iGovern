@@ -10,6 +10,7 @@
     <color name="white_faded">#F8F5F5</color>
 
     <color name="green">#4CAF50</color>
+    <color name="button_border_color">#4D000000</color>
 
     <color name="default_text_colot">#212121</color>
     <color name="faded_default_text_colot">#AA212121</color>
@@ -22,4 +23,8 @@
     <color name="menu_sky_blue">#00FFFF</color>
     <color name="menu_sky_blue_dark">#00BFBF</color>
     <color name="menu_purple">#9C27B0</color>
+
+
+    <color name="red_300">#E57373</color>
+    <color name="red_400">#EF5350</color>
 </resources>

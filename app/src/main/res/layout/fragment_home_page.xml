@@ -20,18 +20,18 @@
             <LinearLayout
                 android:id="@+id/crescentoContainer"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_260sdp"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
                 android:scaleType="centerCrop">
 
 
                 <ImageView
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_70sdp"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:src="@drawable/ic_location"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/transparent"/>
 
 
@@ -56,7 +56,6 @@
                     android:text="Nairobi County"
                     android:textColor="@color/white"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:textSize="@dimen/_22sdp" />
 
                 <Button
@@ -64,14 +63,14 @@
                     android:layout_height="wrap_content"
                     android:text="Refresh"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/btn_rounded"
                     android:textColor="@color/white"/>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@color/colorPrimary"/>
 
 

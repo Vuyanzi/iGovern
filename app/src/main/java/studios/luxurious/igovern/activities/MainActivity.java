@@ -1,23 +1,25 @@
 package studios.luxurious.igovern.activities;
 
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.fragments.ExploreFragment;
 import studios.luxurious.igovern.fragments.HomeFragment;
 import studios.luxurious.igovern.fragments.NotificationsFragment;
 
-
-/**
- * Created by 1HE on 2020-02-02.
- */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,10 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private final static int ID_NOTIFICATION = 4;
     private final static int ID_ACCOUNT = 5;
 
+    BottomSheetBehavior sheetBehavior;
+
+    LinearLayout layoutBottomSheet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bottom_sheet);
 
         MeowBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_explore));
@@ -84,11 +90,64 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setCount(ID_NOTIFICATION, "3");
 
         bottomNavigation.show(ID_HOME,true);
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_send_problem);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+
+                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+
+        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            if (sheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED) {
+
+                Rect outRect = new Rect();
+                layoutBottomSheet.getGlobalVisibleRect(outRect);
+
+                if(!outRect.contains((int)ev.getRawX(), (int)ev.getRawY()))
+                    sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        }
+
+        return super.dispatchTouchEvent(ev);
     }
 
     private void goToSelectedFragment(Fragment selectedFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, selectedFragment);
         transaction.commit();
+    }
+    public void openBottomSheet(){
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
     }
 }
