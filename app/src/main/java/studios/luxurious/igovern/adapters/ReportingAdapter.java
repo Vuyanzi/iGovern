@@ -32,7 +32,7 @@ public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_menu_holder,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_single_item_holder,parent,false);
 
         return new ViewHolder(view);
     }

@@ -75,11 +75,15 @@ public class HomeFragment extends Fragment {
                 switch (tag) {
                     case "report_problem":
                         if (getActivity() != null)
-                        ((MainActivity)getActivity()).openSendProblemBottomDialog();
+                            ((MainActivity) getActivity()).openSendProblemBottomDialog();
                         break;
                     case "send_suggestion":
                         if (getActivity() != null)
-                        ((MainActivity)getActivity()).openSendSuggestionBottomDialog();
+                            ((MainActivity) getActivity()).openSendSuggestionBottomDialog();
+                        break;
+                    case "view_history":
+                        if (getActivity() != null)
+                            ((MainActivity) getActivity()).goToViewHistory();
                         break;
                     default:
                         Toast.makeText(getActivity(), tag, Toast.LENGTH_LONG).show();
@@ -104,7 +108,7 @@ public class HomeFragment extends Fragment {
 
         homeMenus.add(new HomeMenu("Report a problem", "report_problem", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_purple)));
         homeMenus.add(new HomeMenu("Send a suggestion", "send_suggestion", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_orange)));
-        homeMenus.add(new HomeMenu("View History", "tag", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_pink)));
+        homeMenus.add(new HomeMenu("View History", "view_history", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_pink)));
 //        homeMenus.add(new HomeMenu("Buy Airtime", "tag", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_sky_blue_dark)));
 //        homeMenus.add(new HomeMenu("Lipa stima", "tag", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_yellow)));
 //        homeMenus.add(new HomeMenu("iuji ", "tag", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_green)));
@@ -112,6 +116,7 @@ public class HomeFragment extends Fragment {
         homeMenuAdapter.notifyDataSetChanged();
 
     }
+
     private void initViews(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerViewGrid = view.findViewById(R.id.recyclerViewGrid);
@@ -120,8 +125,9 @@ public class HomeFragment extends Fragment {
         actionMenuAdapter = new ActionMenuAdapter(actionMenus);
         homeMenuAdapter = new HomeMenuAdapter(homeMenus);
 
-        if(getActivity() !=null) vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        if (getActivity() != null)
+            vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
 
-}
+    }
 }

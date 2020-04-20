@@ -25,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private final static int ID_NOTIFICATION = 3;
 
     private CFAlertDialog alertDialog;
+    MeowBottomNavigation bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MeowBottomNavigation bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_explore));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_HOME, R.drawable.ic_home));
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_NOTIFICATION, R.drawable.ic_notification));
@@ -101,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
         showSendSuggestionDialog();
     }
 
+    public void goToViewHistory(){
+        bottomNavigation.show(ID_EXPLORE,true);
+
+    }
 
     private void showReportProblemDialog() {
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MainActivity.this);

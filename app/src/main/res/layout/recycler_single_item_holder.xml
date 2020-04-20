@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="#E8E3E3"
+        app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/_15sdp">
 
     <LinearLayout
