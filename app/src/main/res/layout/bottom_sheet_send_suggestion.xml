@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:text="Report a problem"
+        android:text="Suggest a solution"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold" />
@@ -32,17 +32,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/black_border"
-                android:hint="Subject"
+                android:hint="Your name."
                 android:lines="2"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textAllCaps="true" />
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_border"
+                android:hint="Title"
+                android:lines="2"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textAllCaps="true" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -50,7 +59,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/black_border"
                 android:gravity="top|start"
-                android:hint="Explain your grievances"
+                android:hint="Description of your idea"
                 android:lines="9"
                 android:padding="@dimen/_15sdp" />
 

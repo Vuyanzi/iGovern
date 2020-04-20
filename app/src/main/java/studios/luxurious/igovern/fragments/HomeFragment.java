@@ -1,10 +1,8 @@
 package studios.luxurious.igovern.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.crowdfire.cfalertdialog.CFAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +35,6 @@ public class HomeFragment extends Fragment {
 
     private Vibrator vibrator;
 
-    private CFAlertDialog alertDialog;
 
     @Nullable
     @Override
@@ -78,13 +73,13 @@ public class HomeFragment extends Fragment {
                 }
 
                 switch (tag) {
-
                     case "report_problem":
-                        ((MainActivity)getActivity()).openBottomSheet();
-
+                        if (getActivity() != null)
+                        ((MainActivity)getActivity()).openSendProblemBottomDialog();
                         break;
-                    case "send_money":
-//                        startActivity(new Intent(getActivity(), ContactsActivity.class));
+                    case "send_suggestion":
+                        if (getActivity() != null)
+                        ((MainActivity)getActivity()).openSendSuggestionBottomDialog();
                         break;
                     default:
                         Toast.makeText(getActivity(), tag, Toast.LENGTH_LONG).show();
@@ -108,7 +103,7 @@ public class HomeFragment extends Fragment {
     private void loadMenuItems() {
 
         homeMenus.add(new HomeMenu("Report a problem", "report_problem", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_purple)));
-        homeMenus.add(new HomeMenu("Send a suggestion", "tag", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_orange)));
+        homeMenus.add(new HomeMenu("Send a suggestion", "send_suggestion", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_orange)));
         homeMenus.add(new HomeMenu("View History", "tag", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_pink)));
 //        homeMenus.add(new HomeMenu("Buy Airtime", "tag", getResources().getDrawable(R.drawable.ic_send_money), getResources().getColor(R.color.menu_sky_blue_dark)));
 //        homeMenus.add(new HomeMenu("Lipa stima", "tag", getResources().getDrawable(R.drawable.ic_credits), getResources().getColor(R.color.menu_yellow)));
@@ -117,7 +112,6 @@ public class HomeFragment extends Fragment {
         homeMenuAdapter.notifyDataSetChanged();
 
     }
-
     private void initViews(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerViewGrid = view.findViewById(R.id.recyclerViewGrid);
@@ -126,45 +120,8 @@ public class HomeFragment extends Fragment {
         actionMenuAdapter = new ActionMenuAdapter(actionMenus);
         homeMenuAdapter = new HomeMenuAdapter(homeMenus);
 
+        if(getActivity() !=null) vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
-
-        if(getActivity() !=null)
-
-    {
-        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-    }
 
 }
-
-
-    private void showCFDialog() {
-        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity());
-        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
-
-        // Title and message
-        builder.setTitle("Report a problem");
-        builder.setMessage("In order to function properly, " + getString(R.string.app_name) + " needs the following permissions:\nPermission to access your Phone and Contacts.\nPermission to write to your phone storage.");
-
-
-        builder.setTextGravity(Gravity.CENTER);
-
-        builder.addButton("Allow Access", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-//                requestPermissions(permissions, 1);
-                alertDialog.dismiss();
-            }
-        });
-
-        builder.setHeaderView(R.layout.dialog_header_permission_layout);
-//            headerVisibility = true;
-
-        // Cancel on background tap
-        builder.setCancelable(false);
-
-        alertDialog = builder.show();
-
-    }
-
-
 }
