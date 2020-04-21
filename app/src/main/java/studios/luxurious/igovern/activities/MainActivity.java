@@ -3,6 +3,7 @@ package studios.luxurious.igovern.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.fragments.ExploreFragment;
 import studios.luxurious.igovern.fragments.HomeFragment;
 import studios.luxurious.igovern.fragments.NotificationsFragment;
+import studios.luxurious.igovern.utils.Constants;
+import studios.luxurious.igovern.utils.DBAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private CFAlertDialog alertDialog;
     MeowBottomNavigation bottomNavigation;
+    String location;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        location = "Kefinco, KAKAMEGA";
+
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
@@ -56,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
                     case ID_HOME:
                         selectedFragment = new HomeFragment();
                         break;
-                    case ID_EXPLORE: selectedFragment = new ExploreFragment();
+                    case ID_EXPLORE:
+                        selectedFragment = new ExploreFragment();
                         break;
-                    case ID_NOTIFICATION: selectedFragment = new NotificationsFragment();
+                    case ID_NOTIFICATION:
+                        selectedFragment = new NotificationsFragment();
                         break;
                     default:
                         selectedFragment = new HomeFragment();
@@ -80,13 +89,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         bottomNavigation.setCount(ID_NOTIFICATION, "3");
 
-        bottomNavigation.show(ID_HOME,true);
+        bottomNavigation.show(ID_HOME, true);
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (!bottomNavigation.isShowing(ID_HOME)) {
+            bottomNavigation.show(ID_HOME, true);
+            return;
+        }
+        super.onBackPressed();
+    }
 
     private void goToSelectedFragment(Fragment selectedFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -94,16 +111,16 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void openSendProblemBottomDialog(){
+    public void openSendProblemBottomDialog() {
         showReportProblemDialog();
     }
 
-    public void openSendSuggestionBottomDialog(){
+    public void openSendSuggestionBottomDialog() {
         showSendSuggestionDialog();
     }
 
-    public void goToViewHistory(){
-        bottomNavigation.show(ID_EXPLORE,true);
+    public void goToViewHistory() {
+        bottomNavigation.show(ID_EXPLORE, true);
 
     }
 
@@ -114,14 +131,53 @@ public class MainActivity extends AppCompatActivity {
         builder.setHeaderView(R.layout.bottom_sheet_send_problem);
         alertDialog = builder.show();
 
-        Button sendBtn = alertDialog.findViewById(R.id.send);
+        final Button sendBtn = alertDialog.findViewById(R.id.send);
+        Button cancelBtn = alertDialog.findViewById(R.id.cancel);
+        final EditText subject_editText = alertDialog.findViewById(R.id.subject);
+        final EditText message_editText = alertDialog.findViewById(R.id.message);
+
+
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+
+                String message = message_editText.getText().toString();
+                String subject = subject_editText.getText().toString();
+
+
+                if (subject.length() == 0) {
+                    subject_editText.setError("Provide a title");
+                    return;
+                }
+
+
+                if (message.length() == 0) {
+                    message_editText.setError("Provide a description");
+                    return;
+                }
+
+
+                addNewPost(message, subject, location, Constants.PROBLEM_TYPE, 0);
+
                 alertDialog.dismiss();
             }
         });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+    }
+
+    private void addNewPost(String message, String title, String location, int type, int status) {
+
+        DBAdapter db = new DBAdapter(MainActivity.this);
+        db.open();
+        db.insertNewPost(title, location, message, status, type);
+        db.close();
 
     }
 
@@ -132,11 +188,39 @@ public class MainActivity extends AppCompatActivity {
         builder.setHeaderView(R.layout.bottom_sheet_send_suggestion);
         alertDialog = builder.show();
 
-        Button sendBtn = alertDialog.findViewById(R.id.send);
+
+        final Button sendBtn = alertDialog.findViewById(R.id.send);
+        Button cancelBtn = alertDialog.findViewById(R.id.cancel);
+        final EditText title_editText = alertDialog.findViewById(R.id.title);
+        final EditText message_editText = alertDialog.findViewById(R.id.message);
+
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+
+                String message = message_editText.getText().toString();
+                String title = title_editText.getText().toString();
+
+
+                if (title.length() == 0) {
+                    title_editText.setError("Provide a title");
+                    return;
+                }
+
+                if (message.length() == 0) {
+                    message_editText.setError("Provide a suggestion");
+                    return;
+                }
+
+                addNewPost(message, title, location, Constants.SUGGESTION_TYPE, 0);
+
+                alertDialog.dismiss();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });

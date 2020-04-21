@@ -25,7 +25,9 @@
         android:textSize="@dimen/_21sdp"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
+
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:queryHint="Search..."
@@ -39,5 +41,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"/>
+
+
+    <LinearLayout
+        android:id="@+id/noPostLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:src="@drawable/sad"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/default_text_color"
+            android:text="Suggestions and problems you report will appear here"
+            android:layout_margin="@dimen/_20sdp"
+            android:gravity="center"/>
+
+
+    </LinearLayout>
 
 </LinearLayout>

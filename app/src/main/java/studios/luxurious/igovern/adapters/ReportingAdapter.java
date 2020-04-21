@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import studios.luxurious.igovern.R;
+import studios.luxurious.igovern.utils.Constants;
 import studios.luxurious.igovern.utils.Post;
 
 
@@ -41,7 +42,16 @@ public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Post postItem = postItems.get(position);
-        holder.post_title.setText(postItem.getTitle());
+
+
+        String title = postItem.getTitle();
+
+        if (postItem.getType() == Constants.PROBLEM_TYPE){
+            title = title + "(Problem)";
+        }else {
+            title = title + "(Suggestion)"+postItem.getType()+ Constants.PROBLEM_TYPE;
+        }
+        holder.post_title.setText(title);
         holder.post_location.setText(postItem.getLocation());
         holder.post_message.setText(postItem.getMessage());
 

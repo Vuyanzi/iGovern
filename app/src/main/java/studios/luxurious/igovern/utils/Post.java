@@ -2,9 +2,10 @@ package studios.luxurious.igovern.utils;
 
 public class Post {
 
-    private String title, location, message, type, status;
+    private String title, location, message;
+    private int type, status;
 
-    public Post(String title, String location, String message, String type, String status) {
+    public Post(String title, String location, String message, int type, int status) {
         this.title = title;
         this.location = location;
         this.message = message;
@@ -24,11 +25,11 @@ public class Post {
         return message;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 }

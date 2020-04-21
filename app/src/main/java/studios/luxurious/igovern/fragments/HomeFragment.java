@@ -1,8 +1,12 @@
 package studios.luxurious.igovern.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +14,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +49,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         initViews(view);
 
+
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -57,6 +66,9 @@ public class HomeFragment extends Fragment {
 
         loadMoreInfo();
         loadMenuItems();
+
+
+        checkPermissions();
 
         return view;
     }
@@ -92,7 +104,6 @@ public class HomeFragment extends Fragment {
         });
 
     }
-
 
     private void loadMoreInfo() {
 
@@ -130,4 +141,48 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+    private void checkPermissions() {
+        String[] permissions = { Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        boolean[] permissionGranted = new boolean[permissions.length];
+        for (int i = 0; i < permissions.length; i++) {
+            String permission = permissions[i];
+            if (getActivity() != null) {
+                permissionGranted[i] = ContextCompat.checkSelfPermission(getActivity(), permission) == PackageManager.PERMISSION_GRANTED;
+            }
+        }
+        if (!permissionGranted[0]) {
+            showCFDialog(permissions);
+        }
+
+    }
+
+
+    private CFAlertDialog alertDialog;
+
+    private void showCFDialog(final String[] permissions) {
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity());
+        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
+
+        // Title and message
+        builder.setTitle("Grant us permission");
+        builder.setMessage("In order to function properly, " + getString(R.string.app_name) + " needs permission to write to your phone storage.");
+
+        builder.setTextGravity(Gravity.CENTER);
+
+        builder.addButton("Allow Access", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                requestPermissions(permissions, 1);
+                alertDialog.dismiss();
+            }
+        });
+
+        builder.setHeaderView(R.layout.dialog_header_permission_layout);
+        builder.setCancelable(false);
+        alertDialog = builder.show();
+
+    }
+
+
 }

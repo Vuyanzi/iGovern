@@ -28,7 +28,7 @@
             android:text="Garbage Collection"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/default_text_color"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_15sdp" />
 
 
         <TextView
@@ -40,7 +40,7 @@
             android:text="Kefinco, KAKAMEGA"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/default_text_color"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_12sdp" />
 
 
         <TextView
@@ -54,7 +54,7 @@
             android:lines="2"
             android:text="rfuiehf r f8e8fu9er8 fe8ure 89g89uef e89uf e89fu8e fe8uf 9eur f9eur fue rfue rfue9u f9eu8r f8eyr fgweurf9uer89f 89er f8erfe89 rf89wue8uwegw8e89fguer89u g8weu f rwe8ufw8e fu8uwe f8er8fuwe f9we8uf89eruf8weu f8euf8 wu8fgu e8ur89yrfy98e f8eruf89eur fge8gfer89yf9e ryf89eyfher89yf 8eyrfy89ery f89eur"
             android:textColor="@color/default_text_color"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_10sdp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
