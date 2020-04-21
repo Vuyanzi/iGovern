@@ -1,12 +1,18 @@
 package studios.luxurious.igovern.activities;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -93,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.show(ID_HOME, true);
 
+        checkPermissions();
+
     }
 
     @Override
@@ -103,6 +111,46 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+
+    private void checkPermissions() {
+        String[] permissions = { Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        boolean[] permissionGranted = new boolean[permissions.length];
+        for (int i = 0; i < permissions.length; i++) {
+            String permission = permissions[i];
+
+                permissionGranted[i] = ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
+
+        }
+        if (!permissionGranted[0]) {
+            showCFDialog(permissions);
+        }
+
+    }
+
+    private void showCFDialog(final String[] permissions) {
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MainActivity.this);
+        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
+
+        // Title and message
+        builder.setTitle("Grant us permission");
+        builder.setMessage("In order to function properly, " + getString(R.string.app_name) + " needs permission to write to your phone storage.");
+
+        builder.setTextGravity(Gravity.CENTER);
+
+        builder.addButton("Allow Access", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityCompat.requestPermissions(MainActivity.this,permissions, 1);
+                alertDialog.dismiss();
+            }
+        });
+
+        builder.setHeaderView(R.layout.dialog_header_permission_layout);
+        builder.setCancelable(false);
+        alertDialog = builder.show();
+
     }
 
     private void goToSelectedFragment(Fragment selectedFragment) {
