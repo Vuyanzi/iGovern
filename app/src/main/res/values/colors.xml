@@ -28,4 +28,17 @@
 
     <color name="red_300">#E57373</color>
     <color name="red_400">#EF5350</color>
+
+
+
+
+    <array name="rainbow">
+        <item>@color/menu_sky_blue_dark</item>
+        <item>@color/menu_green</item>
+        <item>@color/orange</item>
+        <item>@color/menu_pink</item>
+        <item>@color/menu_purple</item>
+        <item>@color/green</item>
+    </array>
+
 </resources>

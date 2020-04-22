@@ -9,23 +9,31 @@ import com.robinhood.ticker.TickerView;
 
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.utils.BaseActivity;
+import studios.luxurious.igovern.utils.SharedPref;
 
 public class LaunchActivity extends BaseActivity {
 
     private TickerView tickerView;
-
+SharedPref sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_activity);
         tickerView = findViewById(R.id.ticker1);
+        sharedPref = new SharedPref(this);
 
         tickerView.setPreferredScrollingDirection(TickerView.ScrollingDirection.ANY);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(LaunchActivity.this, OnBoardingActivity.class));
+
+                if (sharedPref.getCountyName() != null){
+
+                    startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+                }else {
+                    startActivity(new Intent(LaunchActivity.this, MapsActivity.class));
+                }
                 finish();
 
             }

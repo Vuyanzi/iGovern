@@ -59,6 +59,7 @@
                     android:textSize="@dimen/_22sdp" />
 
                 <Button
+                    android:id="@+id/refreshButton"
                     android:layout_width="@dimen/_200sdp"
                     android:layout_height="wrap_content"
                     android:text="Refresh"

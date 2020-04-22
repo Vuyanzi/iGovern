@@ -25,6 +25,7 @@ import studios.luxurious.igovern.fragments.HomeFragment;
 import studios.luxurious.igovern.fragments.NotificationsFragment;
 import studios.luxurious.igovern.utils.Constants;
 import studios.luxurious.igovern.utils.DBAdapter;
+import studios.luxurious.igovern.utils.SharedPref;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
     MeowBottomNavigation bottomNavigation;
     String location;
 
+    SharedPref sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        sharedPref = new SharedPref(this);
+
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.add(new MeowBottomNavigation.Model(ID_EXPLORE, R.drawable.ic_explore));
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getId()) {
                     case ID_HOME:
-                        selectedFragment = new HomeFragment();
+                        selectedFragment = new HomeFragment(sharedPref.getCountyName());
                         break;
                     case ID_EXPLORE:
                         selectedFragment = new ExploreFragment();
@@ -76,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new NotificationsFragment();
                         break;
                     default:
-                        selectedFragment = new HomeFragment();
+                        selectedFragment = new HomeFragment(sharedPref.getCountyName());
 
                 }
 
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        goToSelectedFragment(new HomeFragment());
+        goToSelectedFragment(new HomeFragment(sharedPref.getCountyName()));
 
         bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
             @Override
@@ -115,13 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void checkPermissions() {
-        String[] permissions = { Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         boolean[] permissionGranted = new boolean[permissions.length];
         for (int i = 0; i < permissions.length; i++) {
             String permission = permissions[i];
-
-                permissionGranted[i] = ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
-
+            permissionGranted[i] = ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
         }
         if (!permissionGranted[0]) {
             showCFDialog(permissions);
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         builder.addButton("Allow Access", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ActivityCompat.requestPermissions(MainActivity.this,permissions, 1);
+                ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
                 alertDialog.dismiss();
             }
         });
@@ -274,4 +278,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                checkPermissions();
+            }
+        }
+    }
+
 }

@@ -1,11 +1,14 @@
 package studios.luxurious.igovern.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import java.util.List;
 
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.activities.MainActivity;
+import studios.luxurious.igovern.activities.MapsActivity;
 import studios.luxurious.igovern.adapters.ActionMenuAdapter;
 import studios.luxurious.igovern.adapters.HomeMenuAdapter;
 import studios.luxurious.igovern.utils.ActionMenu;
@@ -35,6 +39,14 @@ public class HomeFragment extends Fragment {
 
     private Vibrator vibrator;
 
+    TextView countyName;
+    String county;
+
+    Button refreshButton;
+
+    public HomeFragment(String county) {
+        this.county = county;
+    }
 
     @Nullable
     @Override
@@ -46,6 +58,9 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
+        countyName = view.findViewById(R.id.current_county);
+        refreshButton = view.findViewById(R.id.refreshButton);
+        countyName.setText(county);
 
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(actionMenuAdapter);
@@ -88,6 +103,14 @@ public class HomeFragment extends Fragment {
                     default:
                         Toast.makeText(getActivity(), tag, Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MapsActivity.class));
+                getActivity().finish();
             }
         });
 
