@@ -10,6 +10,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.Marker;
 import java.io.IOException;
 import java.util.List;
 
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.utils.SharedPref;
 
@@ -38,9 +41,11 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
-
     SharedPref sharedPref;
     private CFAlertDialog alertDialog;
+
+    SmoothProgressBar smoothProgressBar;
+    TextView messageTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
         sharedPref = new SharedPref(this);
 
+        smoothProgressBar = findViewById(R.id.smoothProgressBar);
+        messageTv = findViewById(R.id.message);
 
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             loadLocation();
@@ -59,6 +66,9 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
     }
 
     private void loadLocation() {
+
+        smoothProgressBar.setVisibility(View.VISIBLE);
+        messageTv.setVisibility(View.VISIBLE);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -86,8 +96,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                 .build();
         mGoogleApiClient.connect();
     }
-
-    //Todo don't show progress diaog when no permission granted
 
     private void showCFDialog(final String[] permissions) {
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MapsActivity.this);

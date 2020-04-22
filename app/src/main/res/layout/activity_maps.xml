@@ -7,27 +7,31 @@
     android:gravity="center">
 
     <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:id="@+id/smoothProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         app:spb_sections_count="4"
         app:spb_colors="@array/rainbow"
         app:spb_speed="2.0"
-        app:spb_stroke_width="8dp"
+        app:spb_stroke_width="4dp"
         app:spb_stroke_separator_length="4dp"
         app:spb_reversed="true"
         app:spb_mirror_mode="true"
+        android:visibility="invisible"
         app:spb_progressiveStart_activated="true"
         app:spb_progressiveStart_speed="1.5"
         app:spb_progressiveStop_speed="3.4"
         android:layout_margin="@dimen/_20sdp"/>
 
     <TextView
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fetching your location. Please wait..."
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:gravity="center"
+        android:visibility="invisible"
         android:layout_margin="@dimen/_20sdp"/>
 
 
