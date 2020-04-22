@@ -30,7 +30,7 @@ import java.util.List;
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.utils.SharedPref;
 
-public class MapsActivity extends FragmentActivity implements        GoogleApiClient.ConnectionCallbacks,
+public class MapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
@@ -50,8 +50,15 @@ public class MapsActivity extends FragmentActivity implements        GoogleApiCl
         sharedPref = new SharedPref(this);
 
 
-        checkPermissions();
+        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            loadLocation();
+        } else {
+            showCFDialog(new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
+        }
 
+    }
+
+    private void loadLocation() {
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -82,19 +89,6 @@ public class MapsActivity extends FragmentActivity implements        GoogleApiCl
 
     //Todo don't show progress diaog when no permission granted
 
-    private void checkPermissions() {
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION};
-        boolean[] permissionGranted = new boolean[permissions.length];
-        for (int i = 0; i < permissions.length; i++) {
-            String permission = permissions[i];
-            permissionGranted[i] = ContextCompat.checkSelfPermission(MapsActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
-        }
-        if (!permissionGranted[0] ) {
-            showCFDialog(permissions);
-        }
-
-    }
-
     private void showCFDialog(final String[] permissions) {
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MapsActivity.this);
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
@@ -108,7 +102,7 @@ public class MapsActivity extends FragmentActivity implements        GoogleApiCl
         builder.addButton("Allow Access", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ActivityCompat.requestPermissions(MapsActivity.this,permissions, 1);
+                ActivityCompat.requestPermissions(MapsActivity.this, permissions, 1);
                 alertDialog.dismiss();
             }
         });
@@ -180,7 +174,9 @@ public class MapsActivity extends FragmentActivity implements        GoogleApiCl
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
         if (requestCode == 1) {
-            if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                loadLocation();
+            } else {
                 finish();
             }
         }
