@@ -114,15 +114,15 @@ public class HomeFragment extends Fragment {
             }
         });
 
-    }
 
+    }
 
     private void loadMoreInfo() {
 
-        actionMenus.add(new ActionMenu("Feedback", "Give us a feedback", getResources().getDrawable(R.drawable.ic_metrics)));
-        actionMenus.add(new ActionMenu("FAQs", "Read our Frequently Asked Questions", getResources().getDrawable(R.drawable.ic_help)));
-        actionMenus.add(new ActionMenu("About Us", "Know more about " + getString(R.string.app_name), getResources().getDrawable(R.drawable.ic_world)));
-        actionMenus.add(new ActionMenu("Logout", "Logout from " + getString(R.string.app_name), getResources().getDrawable(R.drawable.ic_contact)));
+        actionMenus.add(new ActionMenu("Feedback", "Give us a feedback","feedback", getResources().getDrawable(R.drawable.ic_metrics)));
+        actionMenus.add(new ActionMenu("FAQs", "Read our Frequently Asked Questions","faqs", getResources().getDrawable(R.drawable.ic_help)));
+        actionMenus.add(new ActionMenu("About Us", "Know more about " + getString(R.string.app_name),"more", getResources().getDrawable(R.drawable.ic_world)));
+        actionMenus.add(new ActionMenu("Logout", "Logout from " + getString(R.string.app_name),"logout", getResources().getDrawable(R.drawable.ic_contact)));
 
         actionMenuAdapter.notifyDataSetChanged();
     }
@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment {
         recyclerViewGrid = view.findViewById(R.id.recyclerViewGrid);
         homeMenus = new ArrayList<>();
         actionMenus = new ArrayList<>();
-        actionMenuAdapter = new ActionMenuAdapter(actionMenus);
+        actionMenuAdapter = new ActionMenuAdapter(actionMenus, getActivity());
         homeMenuAdapter = new HomeMenuAdapter(homeMenus);
 
         if(getActivity() !=null) vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);

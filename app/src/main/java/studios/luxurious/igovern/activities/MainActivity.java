@@ -102,9 +102,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bottomNavigation.setCount(ID_NOTIFICATION, "3");
-
         bottomNavigation.show(ID_HOME, true);
-
         checkPermissions();
 
     }

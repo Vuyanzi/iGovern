@@ -3,13 +3,14 @@ package studios.luxurious.igovern.utils;
 import android.graphics.drawable.Drawable;
 
 public class ActionMenu {
-    String actionName, actionDesc;
+    String actionName, actionDesc, tag;
     Drawable actionIcon;
 
-    public ActionMenu(String actionName, String actionDesc, Drawable actionIcon) {
+    public ActionMenu(String actionName, String actionDesc, String tag, Drawable actionIcon) {
         this.actionName = actionName;
         this.actionDesc = actionDesc;
         this.actionIcon = actionIcon;
+        this.tag = tag;
     }
 
     public String getActionName() {
@@ -22,5 +23,9 @@ public class ActionMenu {
 
     public Drawable getActionIcon() {
         return actionIcon;
+    }
+
+    public String getTag() {
+        return tag;
     }
 }
