@@ -29,7 +29,7 @@ public class FaqActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
 
         faq_items.add(new FAQ_item("DO you share my information with other people", getString(R.string.text_stars)));
-        faq_items.add(new FAQ_item("Ho do i know whether my suggestion has been worked on", getString(R.string.text_stars)));
+        faq_items.add(new FAQ_item("How do I know whether my suggestion has been worked on", getString(R.string.text_stars)));
         faq_items.add(new FAQ_item("Can I have multiple account in this app", getString(R.string.text_stars)));
         faq_items.add(new FAQ_item("Can I use a different language in this app", getString(R.string.text_stars)));
 

@@ -17,11 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.FaqActivity"></activity>
-        <activity android:name=".activities.Main2Activity" />
-        <activity
-            android:name=".activities.FAQsActivity"
-            android:label="FAQs" />
+        <activity android:name=".activities.FaqActivity"
+            android:label="FAQs"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
