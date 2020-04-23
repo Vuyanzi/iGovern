@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import studios.luxurious.igovern.FAQ_item;
+import studios.luxurious.igovern.utils.FAQ_item;
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.adapters.Faqdapter;
 

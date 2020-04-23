@@ -1,4 +1,4 @@
-package studios.luxurious.igovern;
+package studios.luxurious.igovern.utils;
 
 public class FAQ_item {
     String title, message;

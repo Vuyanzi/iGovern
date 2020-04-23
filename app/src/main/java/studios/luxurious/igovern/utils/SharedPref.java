@@ -23,4 +23,21 @@ public class SharedPref {
     }
 
 
+    public void setUserName(String username) {
+        default_prefence.edit().putString("username", username).apply();
+    }
+
+    public String getUserName() {
+        return default_prefence.getString("username", null);
+    }
+
+    public void setIsFirstTime(boolean isFirstTime) {
+        default_prefence.edit().putBoolean("isFirstTime", isFirstTime).apply();
+    }
+
+    public boolean isFirstTime() {
+        return default_prefence.getBoolean("isFirstTime", true);
+    }
+
+
 }

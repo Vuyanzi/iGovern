@@ -28,8 +28,11 @@ SharedPref sharedPref;
             @Override
             public void run() {
 
-                if (sharedPref.getCountyName() != null){
+                if (sharedPref.isFirstTime()){
 
+                    startActivity(new Intent(LaunchActivity.this, OnBoardingActivity.class));
+
+                } else if (sharedPref.getCountyName() != null){
                     startActivity(new Intent(LaunchActivity.this, MainActivity.class));
                 }else {
                     startActivity(new Intent(LaunchActivity.this, MapsActivity.class));

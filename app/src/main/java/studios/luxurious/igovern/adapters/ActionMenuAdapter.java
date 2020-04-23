@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import studios.luxurious.igovern.activities.About_us;
 import studios.luxurious.igovern.activities.FaqActivity;
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.utils.ActionMenu;
@@ -58,7 +59,10 @@ public class ActionMenuAdapter extends RecyclerView.Adapter<ActionMenuAdapter.Vi
 
                     case "faqs":
                         context.startActivity(new Intent(context, FaqActivity.class));
+                        break;
 
+                    case "about_us":
+                        context.startActivity(new Intent(context, About_us.class));
                         break;
 
                     default:

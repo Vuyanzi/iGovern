@@ -12,7 +12,7 @@ import com.skydoves.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 
-import studios.luxurious.igovern.FAQ_item;
+import studios.luxurious.igovern.utils.FAQ_item;
 import studios.luxurious.igovern.R;
 
 

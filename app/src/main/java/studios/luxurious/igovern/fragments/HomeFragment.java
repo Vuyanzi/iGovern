@@ -118,12 +118,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadMoreInfo() {
-
-        actionMenus.add(new ActionMenu("Feedback", "Give us a feedback","feedback", getResources().getDrawable(R.drawable.ic_metrics)));
-        actionMenus.add(new ActionMenu("FAQs", "Read our Frequently Asked Questions","faqs", getResources().getDrawable(R.drawable.ic_help)));
-        actionMenus.add(new ActionMenu("About Us", "Know more about " + getString(R.string.app_name),"more", getResources().getDrawable(R.drawable.ic_world)));
-        actionMenus.add(new ActionMenu("Logout", "Logout from " + getString(R.string.app_name),"logout", getResources().getDrawable(R.drawable.ic_contact)));
-
+       actionMenus.add(new ActionMenu("FAQs", "Read our Frequently Asked Questions","faqs", getResources().getDrawable(R.drawable.ic_help)));
+        actionMenus.add(new ActionMenu("About Us", "Know more about " + getString(R.string.app_name),"about_us", getResources().getDrawable(R.drawable.ic_world)));
+        actionMenus.add(new ActionMenu("Terms and Conditions", "Our terms and condition","feedback", getResources().getDrawable(R.drawable.ic_metrics)));
+        actionMenus.add(new ActionMenu("Privacy Policy", "Read our policy","feedback", getResources().getDrawable(R.drawable.ic_contact)));
         actionMenuAdapter.notifyDataSetChanged();
     }
 

@@ -57,11 +57,13 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         smoothProgressBar = findViewById(R.id.smoothProgressBar);
         messageTv = findViewById(R.id.message);
 
+
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             loadLocation();
         } else {
             showCFDialog(new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
         }
+
 
     }
 
@@ -158,12 +160,16 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
                     Address address = addresses.get(0);
                     String county_name = address.getAdminArea();
 
+                    String country = address.getCountryName();
+
+                    //TODO check if request is from kenya
                     sharedPref.setCountyName(county_name);
 
-                    Intent intent = new Intent(MapsActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
+                    if (country.equalsIgnoreCase("Kenya")){
+                        gotToNextPage();
+                    }else {
+                        showAlienDialog();
+                    }
 
                 }
             } catch (IOException e) {
@@ -179,8 +185,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 loadLocation();
@@ -189,5 +194,37 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
             }
         }
     }
+
+
+    private void showAlienDialog() {
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MapsActivity.this);
+        builder.setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT);
+
+        // Title and message
+        builder.setTitle("App not available");
+        builder.setMessage(getString(R.string.app_name) + " app is only available in Kenya. \n\n Luckily,for the purposes of testing, you are allowed to use the app.");
+
+        builder.setTextGravity(Gravity.CENTER);
+
+        builder.addButton("Continue", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+                gotToNextPage();
+            }
+        });
+
+        builder.setHeaderView(R.layout.dialog_header_permission_layout);
+        builder.setCancelable(false);
+        alertDialog = builder.show();
+
+    }
+
+   private void gotToNextPage(){
+       Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+       startActivity(intent);
+       finish();
+
+   }
 
 }

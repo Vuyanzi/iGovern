@@ -1,6 +1,7 @@
 package studios.luxurious.igovern.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -18,7 +20,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.fragments.ExploreFragment;
 import studios.luxurious.igovern.fragments.HomeFragment;
@@ -38,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     MeowBottomNavigation bottomNavigation;
     String location;
 
+    ProgressDialog progressDialog;
     SharedPref sharedPref;
 
     @Override
@@ -85,9 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new HomeFragment(sharedPref.getCountyName());
 
                 }
-
                 goToSelectedFragment(selectedFragment);
-
 
             }
         });
@@ -101,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bottomNavigation.setCount(ID_NOTIFICATION, "3");
+//        bottomNavigation.setCount(ID_NOTIFICATION, "3");
         bottomNavigation.show(ID_HOME, true);
         checkPermissions();
 
@@ -185,7 +197,9 @@ public class MainActivity extends AppCompatActivity {
         Button cancelBtn = alertDialog.findViewById(R.id.cancel);
         final EditText subject_editText = alertDialog.findViewById(R.id.subject);
         final EditText message_editText = alertDialog.findViewById(R.id.message);
+        final EditText userName_editText = alertDialog.findViewById(R.id.userName);
 
+        userName_editText.setText(sharedPref.getUserName());
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +207,13 @@ public class MainActivity extends AppCompatActivity {
 
                 String message = message_editText.getText().toString();
                 String subject = subject_editText.getText().toString();
+                String userName = userName_editText.getText().toString();
+
+
+                if (userName.length() == 0) {
+                    userName_editText.setError("Provide a username");
+                    return;
+                }
 
 
                 if (subject.length() == 0) {
@@ -208,8 +229,16 @@ public class MainActivity extends AppCompatActivity {
 
 
                 addNewPost(message, subject, location, Constants.PROBLEM_TYPE, 0);
+                JsonObject suggestionJson = new JsonObject();
 
-                alertDialog.dismiss();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("content", message_editText.getText().toString());
+                jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
+                jsonObject.addProperty("county", sharedPref.getCountyName());
+
+                suggestionJson.add("suggestion", jsonObject);
+
+                submitData(suggestionJson,alertDialog);
             }
         });
 
@@ -238,11 +267,13 @@ public class MainActivity extends AppCompatActivity {
         builder.setHeaderView(R.layout.bottom_sheet_send_suggestion);
         alertDialog = builder.show();
 
-
         final Button sendBtn = alertDialog.findViewById(R.id.send);
         Button cancelBtn = alertDialog.findViewById(R.id.cancel);
         final EditText title_editText = alertDialog.findViewById(R.id.title);
         final EditText message_editText = alertDialog.findViewById(R.id.message);
+        final EditText userName_editText = alertDialog.findViewById(R.id.userName);
+
+        userName_editText.setText(sharedPref.getUserName());
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,6 +281,14 @@ public class MainActivity extends AppCompatActivity {
 
                 String message = message_editText.getText().toString();
                 String title = title_editText.getText().toString();
+                String userName = userName_editText.getText().toString();
+
+
+
+                if (userName.length() == 0) {
+                    userName_editText.setError("Provide a username");
+                    return;
+                }
 
 
                 if (title.length() == 0) {
@@ -264,7 +303,17 @@ public class MainActivity extends AppCompatActivity {
 
                 addNewPost(message, title, location, Constants.SUGGESTION_TYPE, 0);
 
-                alertDialog.dismiss();
+               JsonObject suggestionJson = new JsonObject();
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("content", message_editText.getText().toString());
+                jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
+                jsonObject.addProperty("county", sharedPref.getCountyName());
+
+                suggestionJson.add("suggestion", jsonObject);
+
+                submitData(suggestionJson,alertDialog);
+
             }
         });
 
@@ -278,13 +327,87 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 1) {
             if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 checkPermissions();
             }
         }
     }
+
+
+    private void submitData(JsonObject jsonObject, final CFAlertDialog alertDialog) {
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Submitting suggestion. Please wait");
+        progressDialog.show();
+        //Defining retrofit api service
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        ApiService service = retrofit.create(ApiService.class);
+        Call<JsonObject> call = service.postData(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+
+                    progressDialog.dismiss();
+                    String response_string = response.body().toString();
+                    try {
+                        JSONObject obj = new JSONObject(response_string);
+                        JSONObject jsonObject1 = obj.getJSONObject("data");
+                        int id = jsonObject1.getInt("id");
+
+                        showSuccessfulDialog("Successful", "Your message has been sent successfully.");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        showSuccessfulDialog("Failed", "Something went wrong. Please try again");
+
+                    }
+
+                    alertDialog.dismiss();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                progressDialog.dismiss();
+                alertDialog.dismiss();
+
+            }
+
+        });
+    }
+
+    private interface ApiService {
+        @POST("api/suggestions")
+        Call<JsonObject> postData(@Body JsonObject body);
+    }
+
+
+    void showSuccessfulDialog(String title, String message) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
 
 }
