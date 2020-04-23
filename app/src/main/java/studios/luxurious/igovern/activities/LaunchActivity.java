@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import com.robinhood.ticker.TickerView;
 
+import studios.luxurious.igovern.Main3Activity;
 import studios.luxurious.igovern.R;
 import studios.luxurious.igovern.utils.BaseActivity;
 import studios.luxurious.igovern.utils.SharedPref;
@@ -30,7 +31,7 @@ SharedPref sharedPref;
 
                 if (sharedPref.getCountyName() != null){
 
-                    startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+                    startActivity(new Intent(LaunchActivity.this, Main3Activity.class));
                 }else {
                     startActivity(new Intent(LaunchActivity.this, MapsActivity.class));
                 }
