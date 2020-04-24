@@ -40,9 +40,9 @@
                 android:background="@drawable/black_border"
                 android:hint="Your name."
                 android:lines="2"
+                android:focusable="false"
                 android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:textAllCaps="true" />
+                android:paddingEnd="@dimen/_10sdp" />
 
             <EditText
                 android:id="@+id/subject"
@@ -53,8 +53,7 @@
                 android:lines="2"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:textAllCaps="true" />
+                android:layout_marginTop="@dimen/_20sdp" />
 
 
             <EditText

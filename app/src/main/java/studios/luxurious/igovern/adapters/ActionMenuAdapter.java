@@ -18,6 +18,7 @@ import java.util.List;
 import studios.luxurious.igovern.activities.About_us;
 import studios.luxurious.igovern.activities.FaqActivity;
 import studios.luxurious.igovern.R;
+import studios.luxurious.igovern.activities.Login;
 import studios.luxurious.igovern.utils.ActionMenu;
 
 
@@ -63,6 +64,10 @@ public class ActionMenuAdapter extends RecyclerView.Adapter<ActionMenuAdapter.Vi
 
                     case "about_us":
                         context.startActivity(new Intent(context, About_us.class));
+                        break;
+
+                    case "username":
+                        context.startActivity(new Intent(context, Login.class));
                         break;
 
                     default:

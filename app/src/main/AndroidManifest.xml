@@ -18,10 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activities.About_us"
-            android:label="About Us"/>
-
+        <activity
+            android:name=".activities.About_us"
+            android:label="About Us" />
         <activity
             android:name=".activities.FaqActivity"
             android:label="FAQs" />
@@ -45,6 +44,7 @@
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.OnBoardingActivity" />
         <activity android:name=".RetrofitActivity6" />
+        <activity android:name=".activities.Login" />
     </application>
 
 </manifest>

@@ -28,6 +28,7 @@ import studios.luxurious.igovern.adapters.ActionMenuAdapter;
 import studios.luxurious.igovern.adapters.HomeMenuAdapter;
 import studios.luxurious.igovern.utils.ActionMenu;
 import studios.luxurious.igovern.utils.HomeMenu;
+import studios.luxurious.igovern.utils.SharedPref;
 
 public class HomeFragment extends Fragment {
 
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
     String county;
 
     Button refreshButton;
+    SharedPref sharedPref;
 
     public HomeFragment(String county) {
         this.county = county;
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         initViews(view);
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -120,6 +123,7 @@ public class HomeFragment extends Fragment {
     private void loadMoreInfo() {
        actionMenus.add(new ActionMenu("FAQs", "Read our Frequently Asked Questions","faqs", getResources().getDrawable(R.drawable.ic_help)));
         actionMenus.add(new ActionMenu("About Us", "Know more about " + getString(R.string.app_name),"about_us", getResources().getDrawable(R.drawable.ic_world)));
+        actionMenus.add(new ActionMenu("Change username", "Current username is '"+sharedPref.getUserName()+"'","username", getResources().getDrawable(R.drawable.ic_username)));
         actionMenus.add(new ActionMenu("Terms and Conditions", "Our terms and condition","feedback", getResources().getDrawable(R.drawable.ic_metrics)));
         actionMenus.add(new ActionMenu("Privacy Policy", "Read our policy","feedback", getResources().getDrawable(R.drawable.ic_contact)));
         actionMenuAdapter.notifyDataSetChanged();
@@ -144,6 +148,8 @@ public class HomeFragment extends Fragment {
         actionMenus = new ArrayList<>();
         actionMenuAdapter = new ActionMenuAdapter(actionMenus, getActivity());
         homeMenuAdapter = new HomeMenuAdapter(homeMenus);
+
+        sharedPref = new SharedPref(getActivity());
 
         if(getActivity() !=null) vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 

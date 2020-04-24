@@ -221,8 +221,11 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
     }
 
    private void gotToNextPage(){
-       Intent intent = new Intent(MapsActivity.this, MainActivity.class);
-       startActivity(intent);
+       if (sharedPref.getUserName() != null) {
+           startActivity(new Intent(MapsActivity.this, MainActivity.class));
+       }else {
+           startActivity(new Intent(MapsActivity.this, Login.class));
+       }
        finish();
 
    }

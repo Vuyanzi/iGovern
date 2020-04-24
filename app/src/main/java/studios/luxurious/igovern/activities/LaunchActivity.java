@@ -33,7 +33,13 @@ SharedPref sharedPref;
                     startActivity(new Intent(LaunchActivity.this, OnBoardingActivity.class));
 
                 } else if (sharedPref.getCountyName() != null){
-                    startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+
+
+                    if (sharedPref.getUserName() != null) {
+                        startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+                    }else {
+                        startActivity(new Intent(LaunchActivity.this, Login.class));
+                    }
                 }else {
                     startActivity(new Intent(LaunchActivity.this, MapsActivity.class));
                 }

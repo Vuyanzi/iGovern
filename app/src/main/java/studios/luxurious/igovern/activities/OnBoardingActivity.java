@@ -66,7 +66,12 @@ public class OnBoardingActivity extends AhoyOnboarderActivity {
     public void onFinishButtonPressed() {
         sharedPref.setIsFirstTime(false);
         if (sharedPref.getCountyName() != null){
-            startActivity(new Intent(OnBoardingActivity.this, MainActivity.class));
+
+            if (sharedPref.getUserName() != null) {
+                startActivity(new Intent(OnBoardingActivity.this, MainActivity.class));
+            }else {
+                startActivity(new Intent(OnBoardingActivity.this, Login.class));
+            }
         }else {
             startActivity(new Intent(OnBoardingActivity.this, MapsActivity.class));
         }

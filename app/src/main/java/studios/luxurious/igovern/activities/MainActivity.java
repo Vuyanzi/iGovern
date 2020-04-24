@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,13 +104,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         goToSelectedFragment(new HomeFragment(sharedPref.getCountyName()));
-
-        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
-            @Override
-            public void onReselectItem(MeowBottomNavigation.Model item) {
-                Toast.makeText(MainActivity.this, "reselected item : " + item.getId(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
 //        bottomNavigation.setCount(ID_NOTIFICATION, "3");
         bottomNavigation.show(ID_HOME, true);
@@ -261,7 +253,74 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
     }
+/*
+    public void showSuggestionDialog(){
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.bottom_sheet_send_suggestion);
 
+
+        final Button sendBtn = dialog.findViewById(R.id.send);
+        Button cancelBtn = dialog.findViewById(R.id.cancel);
+        final EditText title_editText = dialog.findViewById(R.id.title);
+        final EditText message_editText = dialog.findViewById(R.id.message);
+        final EditText userName_editText = dialog.findViewById(R.id.userName);
+
+        userName_editText.setText(sharedPref.getUserName());
+
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String message = message_editText.getText().toString();
+                String title = title_editText.getText().toString();
+                String userName = userName_editText.getText().toString();
+
+                if (userName.length() == 0) {
+                    userName_editText.setError("Provide a username");
+                    return;
+                }
+
+
+                if (title.length() == 0) {
+                    title_editText.setError("Provide a title");
+                    return;
+                }
+
+                if (message.length() == 0) {
+                    message_editText.setError("Provide a suggestion");
+                    return;
+                }
+
+                addNewPost(message, title, location, Constants.SUGGESTION_TYPE, 0);
+
+                JsonObject suggestionJson = new JsonObject();
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("content", message_editText.getText().toString());
+                jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
+                jsonObject.addProperty("county", sharedPref.getCountyName());
+                jsonObject.addProperty("title", title_editText.getText().toString());
+                jsonObject.addProperty("type", Constants.SUGGESTION_TYPE_STRING);
+
+                suggestionJson.add("suggestion", jsonObject);
+
+                submitData(suggestionJson,alertDialog);
+
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+    */
     private void showSendSuggestionDialog() {
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MainActivity.this);
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
@@ -284,8 +343,6 @@ public class MainActivity extends AppCompatActivity {
                 String message = message_editText.getText().toString();
                 String title = title_editText.getText().toString();
                 String userName = userName_editText.getText().toString();
-
-
 
                 if (userName.length() == 0) {
                     userName_editText.setError("Provide a username");
