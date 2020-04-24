@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Monday, 1 November 2020"
@@ -21,20 +22,13 @@
         android:textColor="@color/default_text_color"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginStart="@dimen/_10sdp"
-        android:textStyle="bold"
         android:textSize="@dimen/_21sdp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <RelativeLayout
+        android:id="@+id/recyclerHolder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:queryHint="Search..."
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@drawable/black_border"/>
+        android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -42,6 +36,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"/>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/noPostLayout"

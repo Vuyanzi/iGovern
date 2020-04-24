@@ -46,14 +46,14 @@ public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.View
 
         String title = postItem.getTitle();
 
-        if (postItem.getType() == Constants.PROBLEM_TYPE){
+        if (postItem.getType().equals(Constants.PROBLEM_TYPE_STRING)){
             title = title + "(Problem)";
         }else {
-            title = title + "(Suggestion)"+postItem.getType()+ Constants.PROBLEM_TYPE;
+            title = title + "(Suggestion)";
         }
         holder.post_title.setText(title);
-        holder.post_location.setText(postItem.getLocation());
-        holder.post_message.setText(postItem.getMessage());
+        holder.post_location.setText(postItem.getCounty());
+        holder.post_message.setText(postItem.getContent());
 
         holder.nextButton.setOnClickListener(new View.OnClickListener() {
             @Override

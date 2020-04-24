@@ -3,6 +3,9 @@ package studios.luxurious.igovern.utils;
 import android.content.Context;
 import android.provider.Settings;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Constants {
 
     public final static int PROBLEM_TYPE = 1;
@@ -21,6 +24,20 @@ public class Constants {
 
         return "iGN"+id+"20";
 
+    }
+
+    public static String getDate(){
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+            String currentDateTime = dateFormat.format(new Date());
+
+            return currentDateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
     }
 
 }
