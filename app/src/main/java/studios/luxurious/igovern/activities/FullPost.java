@@ -19,10 +19,10 @@ public class FullPost extends AppCompatActivity {
         authorString = getIntent().getStringExtra("author");
         dateString = getIntent().getStringExtra("date");
         contentString = getIntent().getStringExtra("content");
-        contentString = getIntent().getStringExtra("county");
-        contentString = getIntent().getStringExtra("title");
-        contentString = getIntent().getStringExtra("type");
-        contentString = getIntent().getStringExtra("status");
+        countyString = getIntent().getStringExtra("county");
+        titleString = getIntent().getStringExtra("title");
+        typeString = getIntent().getStringExtra("type");
+        statusString = getIntent().getStringExtra("status");
 
 
         author = findViewById(R.id.author);

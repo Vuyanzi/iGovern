@@ -64,6 +64,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 sharedPref.setUserName(usernameEdt.getText().toString());
                 startActivity(new Intent(Login.this, MainActivity.class));
+                finish();
             }
         });
 
