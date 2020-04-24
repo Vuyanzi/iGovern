@@ -72,11 +72,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
             public void onClickItem(MeowBottomNavigation.Model item) {
-//                Toast.makeText(MainActivity.this, "clicked item : " + item.getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        location = "Kefinco, KAKAMEGA";
+        location = sharedPref.getCountyName();
 
         bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
@@ -104,6 +103,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         goToSelectedFragment(new HomeFragment(sharedPref.getCountyName()));
+
+        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+
+            }
+        });
 
 //        bottomNavigation.setCount(ID_NOTIFICATION, "3");
         bottomNavigation.show(ID_HOME, true);
