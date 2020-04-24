@@ -2,7 +2,6 @@ package studios.luxurious.igovern.activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -201,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showReportProblemDialog() {
+
+
+        reportProblemImageView = null;
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MainActivity.this);
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
         builder.setCancelable(true);
@@ -222,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(1,1)
                         .start(MainActivity.this);
 
             }
@@ -293,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showSendSuggestionDialog() {
+        reportProblemImageView = null;
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MainActivity.this);
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
         builder.setCancelable(true);
@@ -304,6 +306,22 @@ public class MainActivity extends AppCompatActivity {
         final EditText title_editText = alertDialog.findViewById(R.id.title);
         final EditText message_editText = alertDialog.findViewById(R.id.message);
         final EditText userName_editText = alertDialog.findViewById(R.id.userName);
+
+
+        final TextView attachText = alertDialog.findViewById(R.id.attachImageText);
+
+        reportProblemImageView = alertDialog.findViewById(R.id.attachedImageView);
+
+        attachText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(MainActivity.this);
+
+            }
+        });
+
 
         userName_editText.setText(sharedPref.getUserName());
 
@@ -475,32 +493,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void performCrop() {
-
-        try {
-            //call the standard crop action intent (the user device may not support it)
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            //indicate image type and Uri
-            cropIntent.setDataAndType(picUri, "image/*");
-            //set crop properties
-            cropIntent.putExtra("crop", "true");
-            //indicate aspect of desired crop
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
-            //indicate output X and Y
-            cropIntent.putExtra("outputX", 256);
-            cropIntent.putExtra("outputY", 256);
-            //retrieve data on return
-            cropIntent.putExtra("return-data", true);
-            //start the activity - we handle returning in onActivityResult
-            startActivityForResult(cropIntent, PIC_CROP);
-        }
-        catch(ActivityNotFoundException anfe){
-            //display an error message
-            String errorMessage = "Whoops - your device doesn't support the crop action!";
-            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
 
 }

@@ -1,12 +1,12 @@
 package studios.luxurious.igovern.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,19 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import studios.luxurious.igovern.R;
+import studios.luxurious.igovern.activities.FullPost;
 import studios.luxurious.igovern.utils.Constants;
 import studios.luxurious.igovern.utils.Post;
+import studios.luxurious.igovern.utils.SharedPref;
 
 
 public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.ViewHolder> {
 
     private List<Post> postItems;
     private Context context;
+    SharedPref sharedPref;
 
 
     public ReportingAdapter(Context context,List<Post> postItems) {
         this.postItems = postItems;
         this.context = context;
+        sharedPref = new SharedPref(context);
     }
 
     @NonNull
@@ -39,9 +43,9 @@ public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        Post postItem = postItems.get(position);
+        final Post postItem = postItems.get(position);
 
 
         String title = postItem.getTitle();
@@ -58,7 +62,17 @@ public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.View
         holder.nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Next clicked", Toast.LENGTH_SHORT).show();
+
+                Intent full_post = new Intent(context, FullPost.class);
+                full_post.putExtra("author", sharedPref.getUserName() );
+                full_post.putExtra("date", "date_not_set");
+                full_post.putExtra("content", postItem.getContent());
+                full_post.putExtra("county", postItem.getCounty());
+                full_post.putExtra("title", postItem.getTitle());
+                full_post.putExtra("type", postItem.getType());
+                full_post.putExtra("status", postItem.getStatus());
+                context.startActivity(full_post);
+
             }
         });
 
