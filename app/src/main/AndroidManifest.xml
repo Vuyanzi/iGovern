@@ -45,6 +45,11 @@
         <activity android:name=".activities.OnBoardingActivity" />
         <activity android:name=".RetrofitActivity6" />
         <activity android:name=".activities.Login" />
+
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/> <!-- optional (needed if default theme has no action bar) -->
+
     </application>
 
 </manifest>

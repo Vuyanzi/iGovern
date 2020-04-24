@@ -64,33 +64,37 @@
                 android:background="@drawable/black_border"
                 android:gravity="top|start"
                 android:hint="Explain your grievances"
-                android:lines="9"
+                android:lines="5"
                 android:padding="@dimen/_15sdp" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_20sdp">
 
-                <ImageButton
+
+                <TextView
+                    android:id="@+id/attachImageText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_20sdp"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_camera" />
+                    android:text="Attach an image"
+                    android:textAllCaps="true"
+                    android:textColor="@color/md_blue_200"/>
 
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_attach" />
+                <ImageView
+                    android:id="@+id/attachedImageView"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/logo"
+                    android:layout_below="@id/attachImageText"
+                    android:layout_toEndOf="@id/attachImageText"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="gone"/>
 
 
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
         <RelativeLayout

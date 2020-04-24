@@ -2,13 +2,19 @@ package studios.luxurious.igovern.activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +26,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.google.gson.JsonObject;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SharedPref sharedPref;
 
+
+
+    final int CAMERA_CAPTURE = 1;
+    final int PIC_CROP = 2;
+    private Uri picUri;
+
+
+    ImageView reportProblemImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,6 +213,21 @@ public class MainActivity extends AppCompatActivity {
         final EditText message_editText = alertDialog.findViewById(R.id.message);
         final EditText userName_editText = alertDialog.findViewById(R.id.userName);
 
+        final TextView attachText = alertDialog.findViewById(R.id.attachImageText);
+
+        reportProblemImageView = alertDialog.findViewById(R.id.attachedImageView);
+
+        attachText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(MainActivity.this);
+
+            }
+        });
+
         userName_editText.setText(sharedPref.getUserName());
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -259,74 +290,8 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
     }
-/*
-    public void showSuggestionDialog(){
-        final Dialog dialog = new Dialog(MainActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.bottom_sheet_send_suggestion);
 
 
-        final Button sendBtn = dialog.findViewById(R.id.send);
-        Button cancelBtn = dialog.findViewById(R.id.cancel);
-        final EditText title_editText = dialog.findViewById(R.id.title);
-        final EditText message_editText = dialog.findViewById(R.id.message);
-        final EditText userName_editText = dialog.findViewById(R.id.userName);
-
-        userName_editText.setText(sharedPref.getUserName());
-
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String message = message_editText.getText().toString();
-                String title = title_editText.getText().toString();
-                String userName = userName_editText.getText().toString();
-
-                if (userName.length() == 0) {
-                    userName_editText.setError("Provide a username");
-                    return;
-                }
-
-
-                if (title.length() == 0) {
-                    title_editText.setError("Provide a title");
-                    return;
-                }
-
-                if (message.length() == 0) {
-                    message_editText.setError("Provide a suggestion");
-                    return;
-                }
-
-                addNewPost(message, title, location, Constants.SUGGESTION_TYPE, 0);
-
-                JsonObject suggestionJson = new JsonObject();
-
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("content", message_editText.getText().toString());
-                jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
-                jsonObject.addProperty("county", sharedPref.getCountyName());
-                jsonObject.addProperty("title", title_editText.getText().toString());
-                jsonObject.addProperty("type", Constants.SUGGESTION_TYPE_STRING);
-
-                suggestionJson.add("suggestion", jsonObject);
-
-                submitData(suggestionJson,alertDialog);
-
-            }
-        });
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
-        dialog.show();
-
-    }
-    */
     private void showSendSuggestionDialog() {
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(MainActivity.this);
         builder.setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET);
@@ -480,5 +445,62 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_CAPTURE) {
+                picUri = data.getData();
+
+                CropImage.activity(picUri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(this);
+
+
+            }
+
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+
+                    picUri = result.getUri();
+                    reportProblemImageView.setImageURI(picUri);
+                    reportProblemImageView.setVisibility(View.VISIBLE);
+
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Toast.makeText(MainActivity.this, "Failed to get profile picture, Try Again.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    private void performCrop() {
+
+        try {
+            //call the standard crop action intent (the user device may not support it)
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            //indicate image type and Uri
+            cropIntent.setDataAndType(picUri, "image/*");
+            //set crop properties
+            cropIntent.putExtra("crop", "true");
+            //indicate aspect of desired crop
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            //indicate output X and Y
+            cropIntent.putExtra("outputX", 256);
+            cropIntent.putExtra("outputY", 256);
+            //retrieve data on return
+            cropIntent.putExtra("return-data", true);
+            //start the activity - we handle returning in onActivityResult
+            startActivityForResult(cropIntent, PIC_CROP);
+        }
+        catch(ActivityNotFoundException anfe){
+            //display an error message
+            String errorMessage = "Whoops - your device doesn't support the crop action!";
+            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 
 }

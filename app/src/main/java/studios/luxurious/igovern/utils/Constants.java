@@ -21,21 +21,16 @@ public class Constants {
     public final static String PROBLEM_TYPE_STRING = "problem";
 
     public static String getAssignedId(int id){
-
         return "iGN"+id+"20";
-
     }
 
     public static String getDate(){
         try {
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
             String currentDateTime = dateFormat.format(new Date());
-
             return currentDateTime;
         } catch (Exception e) {
             e.printStackTrace();
-
             return null;
         }
     }
