@@ -17,4 +17,10 @@ public class Constants {
     public final static String SUGGESTION_TYPE_STRING = "suggestion";
     public final static String PROBLEM_TYPE_STRING = "problem";
 
+    public static String getAssignedId(int id){
+
+        return "iGN"+id+"20";
+
+    }
+
 }

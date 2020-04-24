@@ -373,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
 
                 suggestionJson.add("suggestion", jsonObject);
 
+
                 submitData(suggestionJson,alertDialog);
 
             }
@@ -398,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void submitData(JsonObject jsonObject, final CFAlertDialog alertDialog) {
         progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("Submitting suggestion. Please wait");
+        progressDialog.setMessage("Submitting. Please wait...");
         progressDialog.show();
         //Defining retrofit api service
         Retrofit retrofit = new Retrofit.Builder()
@@ -420,7 +421,10 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jsonObject1 = obj.getJSONObject("data");
                         int id = jsonObject1.getInt("id");
 
-                        showSuccessfulDialog("Successful", "Your message has been sent successfully.");
+
+                        String message = "Your request has been successfully received and assigned ID '"+Constants.getAssignedId(id)+"'.\nOur team will look at it and give you a response. \n\nThank You";
+
+                        showSuccessfulDialog("Successful", message);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -437,6 +441,8 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 progressDialog.dismiss();
                 alertDialog.dismiss();
+                showSuccessfulDialog("Failed", "Something went wrong. Please try again.");
+
 
             }
 
