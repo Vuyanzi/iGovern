@@ -235,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.addProperty("content", message_editText.getText().toString());
                 jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
                 jsonObject.addProperty("county", sharedPref.getCountyName());
+                jsonObject.addProperty("title", subject_editText.getText().toString());
+                jsonObject.addProperty("type", Constants.PROBLEM_TYPE_STRING);
 
                 suggestionJson.add("suggestion", jsonObject);
 
@@ -309,6 +311,8 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.addProperty("content", message_editText.getText().toString());
                 jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
                 jsonObject.addProperty("county", sharedPref.getCountyName());
+                jsonObject.addProperty("title", title_editText.getText().toString());
+                jsonObject.addProperty("type", Constants.SUGGESTION_TYPE_STRING);
 
                 suggestionJson.add("suggestion", jsonObject);
 
@@ -335,7 +339,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void submitData(JsonObject jsonObject, final CFAlertDialog alertDialog) {
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Submitting suggestion. Please wait");
@@ -345,7 +348,6 @@ public class MainActivity extends AppCompatActivity {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         ApiService service = retrofit.create(ApiService.class);
         Call<JsonObject> call = service.postData(jsonObject);

@@ -12,7 +12,9 @@ public class Constants {
 
     public static String getUniqueDeviceId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(),Settings.Secure.ANDROID_ID);
-
     }
+
+    public final static String SUGGESTION_TYPE_STRING = "suggestion";
+    public final static String PROBLEM_TYPE_STRING = "problem";
 
 }

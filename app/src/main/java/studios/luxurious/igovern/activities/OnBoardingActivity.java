@@ -25,10 +25,10 @@ public class OnBoardingActivity extends AhoyOnboarderActivity {
         super.onCreate(savedInstanceState);
         sharedPref = new SharedPref(this);
 
-        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Report problems to your government", "", R.drawable.backpack);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Send suggestions to your leaders", "", R.drawable.chalk);
-        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Check on progress", "", R.drawable.chat);
-        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("Build your nation", "The power to make change is now a button away.", R.drawable.ic_gavel);
+        AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Report", "Report problems to your government", R.drawable.report);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Suggest", "Send suggestions to your leaders", R.drawable.concept);
+        AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Follow up", "Push on implementation of your suggestions and solutions to problems ", R.drawable.follow_up);
+        AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("Change", "The power to make change is now a button away.", R.drawable.change);
 
         ahoyOnboarderCard1.setBackgroundColor(R.color.black_transparent);
         ahoyOnboarderCard2.setBackgroundColor(R.color.black_transparent);
@@ -47,7 +47,7 @@ public class OnBoardingActivity extends AhoyOnboarderActivity {
             page.setDescriptionColor(R.color.grey_200);
             //page.setTitleTextSize(dpToPixels(12, this));
             //page.setDescriptionTextSize(dpToPixels(8, this));
-            page.setIconLayoutParams(180, 180, 100, 10, 10, 10);
+            page.setIconLayoutParams(160, 160, 50, 10, 10, 10);
         }
 
         setFinishButtonTitle("Finish");
