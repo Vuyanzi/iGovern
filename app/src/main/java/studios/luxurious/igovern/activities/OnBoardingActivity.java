@@ -26,7 +26,7 @@ public class OnBoardingActivity extends AhoyOnboarderActivity {
         sharedPref = new SharedPref(this);
 
         AhoyOnboarderCard ahoyOnboarderCard1 = new AhoyOnboarderCard("Report", "Report problems to your government", R.drawable.report);
-        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Suggest", "Send suggestions to your leaders", R.drawable.concept);
+        AhoyOnboarderCard ahoyOnboarderCard2 = new AhoyOnboarderCard("Suggest", "Suggest ideas and solutions to your leaders", R.drawable.concept);
         AhoyOnboarderCard ahoyOnboarderCard3 = new AhoyOnboarderCard("Follow up", "Push on implementation of your suggestions and solutions to problems ", R.drawable.follow_up);
         AhoyOnboarderCard ahoyOnboarderCard4 = new AhoyOnboarderCard("Change", "The power to make change is now a button away.", R.drawable.change);
 
@@ -47,7 +47,7 @@ public class OnBoardingActivity extends AhoyOnboarderActivity {
             page.setDescriptionColor(R.color.grey_200);
             //page.setTitleTextSize(dpToPixels(12, this));
             //page.setDescriptionTextSize(dpToPixels(8, this));
-            page.setIconLayoutParams(160, 160, 50, 10, 10, 10);
+            page.setIconLayoutParams(180, 180, 50, 10, 10, 10);
         }
 
         setFinishButtonTitle("Finish");
