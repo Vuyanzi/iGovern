@@ -5,7 +5,7 @@ defmodule IGovern.Suggestions.Suggestion do
 
   schema "suggestions" do
     field :device, :string
-    field :status, :string
+    field :status, :string, default: "received"
     field :content, :string
     field :county, :string
     field :title, :string

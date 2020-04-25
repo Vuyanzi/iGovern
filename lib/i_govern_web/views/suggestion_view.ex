@@ -18,7 +18,8 @@ defmodule IGovernWeb.SuggestionView do
       status: suggestion.status,
       county: suggestion.county,
       title: suggestion.title,
-      type: suggestion.type
+      type: suggestion.type,
+      inserted_at: NaiveDateTime.add(suggestion.inserted_at, 3600 * 3)
     }
   end
 end
