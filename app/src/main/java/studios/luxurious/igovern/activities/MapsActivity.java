@@ -162,7 +162,6 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
 
                     String country = address.getCountryName();
 
-                    //TODO check if request is from kenya
                     sharedPref.setCountyName(county_name);
 
                     if (country.equalsIgnoreCase("Kenya")){

@@ -20,8 +20,8 @@
             <LinearLayout
                 android:id="@+id/crescentoContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:layout_height="@dimen/_260sdp"
+                android:background="@drawable/curved"
                 android:orientation="vertical"
                 android:scaleType="centerCrop">
 
