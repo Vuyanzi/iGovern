@@ -11,6 +11,10 @@ defmodule IGovern.Suggestions.Suggestion do
     field :title, :string
     field :type, :string
 
+    embeds_many :images, Image do
+      field :name, :string
+    end
+
     timestamps()
   end
 
@@ -19,6 +23,12 @@ defmodule IGovern.Suggestions.Suggestion do
     suggestion
     |> cast(attrs, [:device, :content, :status, :county, :title, :type])
     |> validate_required([:device, :content, :county])
+    |> cast_embed(:images, with: &images_changeset/2)
+  end
+
+  defp images_changeset(schema, params) do
+    schema
+    |> cast(params, [:name])
   end
 
   def filter(params) do
