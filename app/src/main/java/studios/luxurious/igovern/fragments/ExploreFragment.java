@@ -143,8 +143,10 @@ public class ExploreFragment extends Fragment {
                         String status = un.getString("status");
                         String title = un.getString("title");
                         String type = un.getString("type");
+                        String username = un.getString("username");
+                        String inserted_at = un.getString("inserted_at");
 
-                        postItems.add(new Post(id,content,county, device,status,title,type));
+                        postItems.add(new Post(id,content,county, device,status,title,type,username,inserted_at));
 
 
 

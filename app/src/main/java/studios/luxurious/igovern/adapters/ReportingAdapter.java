@@ -64,8 +64,8 @@ public class ReportingAdapter extends RecyclerView.Adapter<ReportingAdapter.View
             public void onClick(View v) {
 
                 Intent full_post = new Intent(context, FullPost.class);
-                full_post.putExtra("author", sharedPref.getUserName() );
-                full_post.putExtra("date", "date_not_set");
+                full_post.putExtra("author", postItem.getUsername() );
+                full_post.putExtra("date", postItem.getInserted_at());
                 full_post.putExtra("content", postItem.getContent());
                 full_post.putExtra("county", postItem.getCounty());
                 full_post.putExtra("title", postItem.getTitle());
