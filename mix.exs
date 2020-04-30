@@ -42,7 +42,8 @@ defmodule IGovern.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:tzdata, "~> 1.0.1"},
-      {:httpoison, "~> 1.6"}
+      {:httpoison, "~> 1.6"},
+      {:distillery, "~> 2.0"}
     ]
   end
 
