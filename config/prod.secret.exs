@@ -30,6 +30,8 @@ config :i_govern, IGovernWeb.Endpoint,
   ],
   secret_key_base: secret_key_base
 
+config :i_govern, bucket: System.get_env("GCP_BUCKET")
+
 # ## Using releases (Elixir v1.9+)
 #
 # If you are doing OTP releases, you need to instruct Phoenix

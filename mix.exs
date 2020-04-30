@@ -41,7 +41,8 @@ defmodule IGovern.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:tzdata, "~> 1.0.1"}
+      {:tzdata, "~> 1.0.1"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 

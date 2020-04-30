@@ -19,7 +19,17 @@ defmodule IGovernWeb.SuggestionView do
       county: suggestion.county,
       title: suggestion.title,
       type: suggestion.type,
-      inserted_at: NaiveDateTime.add(suggestion.inserted_at, 3600 * 3)
+      inserted_at: NaiveDateTime.add(suggestion.inserted_at, 3600 * 3),
+      images: render_image_urls(suggestion.images)
     }
   end
+
+  def render_image_urls([%_{} | _] = images) do
+    images
+    |> Enum.map(fn image ->
+      IGovern.GCP.base_url() <> image.name
+    end)
+  end
+
+  def render_image_urls(_), do: []
 end
