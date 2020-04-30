@@ -22,7 +22,7 @@ defmodule IGovern.Suggestions.Suggestion do
   @doc false
   def changeset(suggestion, attrs) do
     suggestion
-    |> cast(attrs, [:device, :content, :status, :county, :title, :type, :name])
+    |> cast(attrs, [:device, :content, :status, :county, :title, :type, :username])
     |> validate_required([:device, :content, :county])
     |> cast_embed(:images, with: &images_changeset/2)
   end
