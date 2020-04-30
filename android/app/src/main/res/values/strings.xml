@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE resources [<!ENTITY appname "iGovern">]>
+
+<resources>
+    <string name="app_name">&appname;</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="text_stars">A sample answer to the above FAQ will be posted here. The answer may be long. This is a dummy text.</string>
+    <string name="usernameText">&appname; requires you to provide a username that will be used when sending suggestions and proposals to your government. \n\nIt is advisable NOT to use your real name.\n\nA valid username must contain 3 or more characters.</string>
+    <string name="title_activity_maps_tests">Map</string>
+</resources>

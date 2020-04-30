@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/colorPrimary">
+
+
+        <RelativeLayout
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:background="@drawable/ring_background"
+            android:layout_gravity="center_horizontal|center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/logo"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    <com.robinhood.ticker.TickerView
+        android:id="@+id/ticker1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/_12sdp"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:text="Luxurious Studios"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_25sdp"
+        app:ticker_animationDuration="2500"
+        app:ticker_defaultCharacterList="alphabet"/>
+</LinearLayout>
