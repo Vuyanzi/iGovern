@@ -35,7 +35,7 @@ config :i_govern, IGovernWeb.Endpoint,
     port: String.to_integer(System.get_env("PORT") || "4000"),
     transport_options: [socket_opts: [:inet6], host: host_name]
   ],
-  https: [host: host_name],
+  # https: [host: host_name],
   secret_key_base: secret_key_base
 
 config :i_govern, bucket: System.get_env("GCP_BUCKET") || "igvovern"
@@ -45,7 +45,7 @@ config :i_govern, bucket: System.get_env("GCP_BUCKET") || "igvovern"
 # If you are doing OTP releases, you need to instruct Phoenix
 # to start each relevant endpoint:
 #
-#     config :i_govern, IGovernWeb.Endpoint, server: true
+config :i_govern, IGovernWeb.Endpoint, server: true
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
