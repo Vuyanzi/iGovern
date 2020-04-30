@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.addProperty("content", message_editText.getText().toString());
                 jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
                 jsonObject.addProperty("county", sharedPref.getCountyName());
+                jsonObject.addProperty("username", sharedPref.getUserName());
                 jsonObject.addProperty("title", subject_editText.getText().toString());
                 jsonObject.addProperty("type", Constants.PROBLEM_TYPE_STRING);
 
@@ -357,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.addProperty("content", message_editText.getText().toString());
                 jsonObject.addProperty("device", Constants.getUniqueDeviceId(MainActivity.this));
                 jsonObject.addProperty("county", sharedPref.getCountyName());
+                jsonObject.addProperty("username", sharedPref.getUserName());
                 jsonObject.addProperty("title", title_editText.getText().toString());
                 jsonObject.addProperty("type", Constants.SUGGESTION_TYPE_STRING);
 
@@ -417,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        showSuccessfulDialog("Failed", "Something went wrong. Please try again");
+                        showSuccessfulDialog("Failed", "Something went wrong. Please try again "+ e.getMessage());
 
                     }
 
@@ -430,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 progressDialog.dismiss();
                 alertDialog.dismiss();
-                showSuccessfulDialog("Failed", "Something went wrong. Please try again.");
+                showSuccessfulDialog("Failed", "Something went wrong. Please try again."+ t.getMessage());
 
 
             }

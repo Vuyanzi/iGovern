@@ -62,13 +62,13 @@ public class ExploreFragment extends Fragment {
 
         date_txt.setText(Constants.getDate());
 
-         noPostLayout = view.findViewById(R.id.noPostLayout);
+        noPostLayout = view.findViewById(R.id.noPostLayout);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
 
         postItems = new ArrayList<>();
-        reportingAdapter = new ReportingAdapter(getActivity(),postItems);
+        reportingAdapter = new ReportingAdapter(getActivity(), postItems);
         recyclerView.setItemAnimator(null);
         recyclerView.setAdapter(reportingAdapter);
         fetchData();
@@ -76,13 +76,13 @@ public class ExploreFragment extends Fragment {
     }
 
 
-    private void setLayoutsVisibility( int size){
+    private void setLayoutsVisibility(int size) {
 
 
-        if (size > 0){
+        if (size > 0) {
             noPostLayout.setVisibility(View.GONE);
             recyclerHolder.setVisibility(View.VISIBLE);
-        }else {
+        } else {
 
             noPostLayout.setVisibility(View.VISIBLE);
             recyclerHolder.setVisibility(View.GONE);
@@ -90,13 +90,13 @@ public class ExploreFragment extends Fragment {
     }
 
 
-    private void fetchData(){
+    private void fetchData() {
 
         progressBar.setVisibility(View.VISIBLE);
         setLayoutsVisibility(1);
 
         String device_id = Constants.getUniqueDeviceId(getActivity());
-        String URLline = Constants.BASE_URL+ "api/suggestions?device="+device_id;
+        String URLline = Constants.BASE_URL + "api/suggestions?device=" + device_id;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLline, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -128,31 +128,30 @@ public class ExploreFragment extends Fragment {
         try {
             JSONObject jsonObject = new JSONObject(response);
 
-                    JSONArray suggestions = jsonObject.getJSONArray("data");
+            JSONArray suggestions = jsonObject.getJSONArray("data");
 
 
             setLayoutsVisibility(suggestions.length());
 
-                    for (int i = 0; i < suggestions.length(); i++) {
-                        JSONObject un = suggestions.getJSONObject(i);
+            for (int i = 0; i < suggestions.length(); i++) {
+                JSONObject un = suggestions.getJSONObject(i);
 
-                        String id = un.getString("id");
-                        String content = un.getString("content");
-                        String county = un.getString("county");
-                        String device = un.getString("device");
-                        String status = un.getString("status");
-                        String title = un.getString("title");
-                        String type = un.getString("type");
-                        String username = un.getString("username");
-                        String inserted_at = un.getString("inserted_at");
+                String id = un.getString("id");
+                String content = un.getString("content");
+                String county = un.getString("county");
+                String device = un.getString("device");
+                String status = un.getString("status");
+                String title = un.getString("title");
+                String type = un.getString("type");
+                String username = un.getString("username");
+                String inserted_at = un.getString("inserted_at");
 
-                        postItems.add(new Post(id,content,county, device,status,title,type,username,inserted_at));
+                postItems.add(new Post(id, content, county, device, status, title, type, username, inserted_at));
 
 
+            }
 
-                    }
-
-                    reportingAdapter.notifyDataSetChanged();
+            reportingAdapter.notifyDataSetChanged();
 
 
         } catch (JSONException e) {

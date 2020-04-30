@@ -28,12 +28,12 @@ public class FullPost extends AppCompatActivity {
         author = findViewById(R.id.author);
         date = findViewById(R.id.date);
         content = findViewById(R.id.content);
-
+        status = findViewById(R.id.status);
 
         author.setText(authorString);
         date.setText(dateString);
         content.setText(contentString);
-
+        status.setText(statusString);
 
     }
 }
