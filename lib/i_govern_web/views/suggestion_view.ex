@@ -19,6 +19,7 @@ defmodule IGovernWeb.SuggestionView do
       county: suggestion.county,
       title: suggestion.title,
       type: suggestion.type,
+      username: suggestion.username,
       inserted_at: NaiveDateTime.add(suggestion.inserted_at, 3600 * 3),
       images: render_image_urls(suggestion.images)
     }

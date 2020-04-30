@@ -10,6 +10,7 @@ defmodule IGovern.Suggestions.Suggestion do
     field :county, :string
     field :title, :string
     field :type, :string
+    field :username, :string
 
     embeds_many :images, Image do
       field :name, :string
@@ -21,7 +22,7 @@ defmodule IGovern.Suggestions.Suggestion do
   @doc false
   def changeset(suggestion, attrs) do
     suggestion
-    |> cast(attrs, [:device, :content, :status, :county, :title, :type])
+    |> cast(attrs, [:device, :content, :status, :county, :title, :type, :name])
     |> validate_required([:device, :content, :county])
     |> cast_embed(:images, with: &images_changeset/2)
   end
@@ -52,6 +53,9 @@ defmodule IGovern.Suggestions.Suggestion do
 
       {"title", value}, dynamic ->
         dynamic([s], ^dynamic and ilike(s.title, ^"%#{value}%"))
+
+      {"username", value}, dynamic ->
+        dynamic([s], ^dynamic and s.username == ^value)
 
       {_, _}, dynamic ->
         # Not a where parameter
