@@ -23,14 +23,22 @@ secret_key_base =
     You can generate one by calling: mix phx.gen.secret
     """
 
+host_name =
+  System.get_env("HOST_NAME") ||
+    raise """
+    environment variable HOST_NAME is missing.
+    example: igovern.com
+    """
+
 config :i_govern, IGovernWeb.Endpoint,
   http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
-    transport_options: [socket_opts: [:inet6]]
+    transport_options: [socket_opts: [:inet6], host: host_name]
   ],
+  https: [host: host_name],
   secret_key_base: secret_key_base
 
-config :i_govern, bucket: System.get_env("GCP_BUCKET")
+config :i_govern, bucket: System.get_env("GCP_BUCKET") || "igvovern"
 
 # ## Using releases (Elixir v1.9+)
 #
