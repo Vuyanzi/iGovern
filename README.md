@@ -8,7 +8,7 @@ iGovern is currently only available in Kenya but for testing purposes it has bee
 
 ## Screenshots
 
-<img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr1.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr2.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr3.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr4.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr5.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr6.png" width="200" height="auto">
+<img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr1.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr2.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr3.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr4.png" width="200" height="auto"> <img src="https://github.com/MartinMbae/iGovern/blob/master/screenshots/scr6.png" width="200" height="auto">
 
 
 ## License
